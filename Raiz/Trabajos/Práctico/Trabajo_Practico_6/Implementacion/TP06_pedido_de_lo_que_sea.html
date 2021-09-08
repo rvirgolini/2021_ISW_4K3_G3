@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Realizar pedido de lo que sea</title>
+</head>
+<body>
+    <div class="container mt-2">
+        <h3 class="text-center text-primary font-weight-bolder">Realizar pedido de lo que sea</h3>
+        <br>
+        <form name="pedido">
+            <div class="form-group">
+              <label for="productos">Indique productos a buscar</label>
+              <textarea class="form-control" name="productos" id="productos" rows="4"></textarea>
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="foto">Adjunte una foto de lo que busca (opcional)</label>
+              <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId">
+              <small id="fileHelpId" class="form-text text-muted">(Formato JPG, 5MB max)</small>
+            </div>
+            <br>
+            <p>Dirección del comercio:</p>
+            <br>
+            <div class="form-group">
+              <label for="ciudad">Ciudad:</label>
+              <select class="form-control" name="ciudad" id="ciudad">
+                <option>Córdoba</option>
+                <option>Alta Gracia</option>
+                <option>Villa Carlos Paz</option>
+              </select>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                      <label for="calle">Calle:</label>
+                      <input type="text"
+                        class="form-control" name="calle" id="calle" placeholder="Calle falsa">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label for="numero">Número:</label>
+                      <input type="text"
+                        class="form-control" name="numero" id="numero" placeholder="123">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+              <img src="assets/placeholder_map.png" alt="mapa">
+            </div>
+            <br>
+            <div class="form-group">
+              <label for="pago">Seleccione una forma de pago</label>
+              <select class="form-control" name="pago" id="pago">
+                <option>Efectivo</option>
+                <option>Tarjeta VISA</option>
+              </select>
+            </div>
+            <br>
+            <div class="form-group monto">
+              <label for="monto">Ingrese el monto a pagar</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" name="monto" id="monto" placeholder="0.00">
+              </div>
+            </div>
+            <div class="form-group tarjeta">
+              <label for="nro-tarjeta">Numero de tarjeta:</label>
+              <input type="text"
+                class="form-control" name="nro-tarjeta" id="nro-tarjeta" placeholder="">
+              <label for="titular">Nombre y apellido del titular:</label>
+              <input type="text"
+                class="form-control" name="titular" id="titular" placeholder="">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="vencimiento">Fecha de vencimiento:</label>
+                  <input type="text"
+                    class="form-control" name="vencimiento" id="vencimiento" placeholder="MM/AAAA">
+                </div>
+                <div class="col-sm-6">
+                  <label for="cvc">Código de seguridad:</label>
+                  <input type="text"
+                      class="form-control" name="cvc" id="cvc" placeholder="">
+                </div>
+              </div>
+            </div>
+            <br>
+            <p>Quiero recibirlo...</p>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="recibir" id="antes" value="antes" checked>
+                Lo antes posible
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="recibir" id="programado" value="programado">
+                A una fecha y hora elegida
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="fecha"></label>
+              <input type="datetime-local"
+                class="form-control" name="fecha" id="fecha" value="new Date().toJSON().slice(0,19)" disabled>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/TP06_pedido_de_lo_que_sea.js"></script>
+</body>
+</html>
