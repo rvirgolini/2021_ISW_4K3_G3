@@ -5,6 +5,8 @@ import { Pedido } from 'src/app/models/pedido';
 import { Router } from '@angular/router';
 import { Ciudad, Ciudades } from 'src/app/models/ciudade';
 import { ModoPago, ModoPagos } from 'src/app/models/modoPago';
+import { CiudadesService } from 'src/app/services/ciudades.service';
+import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
 
 
 
@@ -16,7 +18,9 @@ import { ModoPago, ModoPagos } from 'src/app/models/modoPago';
 export class FormularioComponent implements OnInit {
   ciudadesComercio = Ciudades
   ciudadesClientes = Ciudades
+  ciudadesDisponibles: Ciudad[] = [];
   modosPago = ModoPagos
+  modosPagoDisponible: ModoPago[] = [];
   verSeleccionPago: ModoPago  = {modo:""};
   verSeleccionCiudadComercio: Ciudad  = {nombre:""};
   verSeleccionCiudadCliente: Ciudad  = {nombre:""};
@@ -37,6 +41,8 @@ export class FormularioComponent implements OnInit {
   pedidoForm: FormGroup;
   constructor(private router: Router
     , private formBuilder: FormBuilder
+    , private ciudadesService: CiudadesService
+    , private metodosPagoService: MetodosPagoService
     ) { 
     
     this.pedidoForm = this.formBuilder.group({
@@ -51,18 +57,30 @@ export class FormularioComponent implements OnInit {
       detalleUbicacionCliente: [''],
       formaDePago: [  ],
       fechaPedido: [ '' ]
-      
     });
     
-    
+    this.ciudadesService.getCiudades().subscribe(resp => {
+      Object.keys(resp).
+      forEach(key => this.ciudadesDisponibles.push({
+                                                nombre: resp[key].nombre
+                                                }));
+    });
+
+    this.metodosPagoService.getMetodosPago().subscribe(resp => {
+      Object.keys(resp)
+      .filter(key => resp[key].activo)
+      .forEach(activeKey =>this.modosPagoDisponible.push({
+                                                      modo: resp[activeKey].nombre
+                                                      })
+      )
+    });
   }
 
   ngOnInit(): void {
-
+    console.log(this.ciudadesDisponibles);
   }
  
   onSubmit(value: Pedido) {
-
     console.log(this.pedidoForm.value);
  
     console.log(value)

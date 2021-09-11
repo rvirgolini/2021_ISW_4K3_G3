@@ -20,9 +20,8 @@
       <p>Dirección del comercio:</p>
       <br/>
       <label for="ciudadComercio"> Ciudad del comercio: </label>
-      <select class="form-control" [(ngModel)]="verSeleccionCiudadComercio"  formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
-        <option value="">Ciudades</option>
-        <option *ngFor="let opt of ciudadesComercio" value="{{opt.nombre}}">{{opt.nombre}}</option>
+      <select class="form-control" [(ngModel)]="verSeleccionCiudadComercio" formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
+        <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
        
       </select>
       
@@ -44,9 +43,8 @@
       <p>Dirección del Cliente:</p>
       <br/>
       <label for="ciudadCliente"> Ciudad del cliente: </label>
-      <select class="form-control" [(ngModel)]="verSeleccionCiudadCliente"  formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
-        <option value="">Ciudades</option>
-        <option *ngFor="let opt of ciudadesClientes" value="{{opt.nombre}}">{{opt.nombre}}</option>
+      <select class="form-control" [(ngModel)]="verSeleccionCiudadCliente" formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
+        <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
        
       </select>
       
@@ -75,7 +73,7 @@
       
         <label for="formaDePago"> Seleccione una forma de pago: </label>
       <select class="form-control" [(ngModel)]="verSeleccionPago"  formControlName="formaDePago" name="formaDePago" id="formaDePago">
-        <option *ngFor="let opt of modosPago" value="{{opt.modo}}">{{opt.modo}}</option>
+        <option *ngFor="let opt of modosPagoDisponible" value="{{opt.modo}}">{{opt.modo}}</option>
        
       </select>
       
