@@ -39,7 +39,11 @@
       <label for="detalleUbicacionComercio"> Detalle Ubicacion de Comercio: </label>
       <br>
       <textarea id="detalleUbicacionComercio" type="textarea" formControlName="detalleUbicacionComercio" rows="3" cols="20"></textarea>
-   
+      
+      <div class="container-mapa">
+        <app-map (direccion)="onMapClick($event)"></app-map>
+      </div>
+
       <p>Dirección del Cliente:</p>
       <br/>
       <label for="ciudadCliente"> Ciudad del cliente: </label>

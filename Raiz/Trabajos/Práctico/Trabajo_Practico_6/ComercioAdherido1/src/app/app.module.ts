@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,12 +12,14 @@ import { PagoComponent } from './component/pago/pago.component';
 import { ResumenComponent } from './component/resumen/resumen.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MapComponent } from './component/map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
     FormularioComponent,
     PagoComponent,
-    ResumenComponent
+    ResumenComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDJn4F2XB6c_-DAX5m9nmfjDTsT-v5UppY'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

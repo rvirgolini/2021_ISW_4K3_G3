@@ -8,6 +8,7 @@ import { ModoPago, ModoPagos } from 'src/app/models/modoPago';
 import { CiudadesService } from 'src/app/services/ciudades.service';
 import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { Direccion } from 'src/app/models/direccion';
 
 
 
@@ -81,7 +82,7 @@ export class FormularioComponent implements OnInit {
     console.log(this.ciudadesDisponibles);
   }
  
-  onSubmit(value: Pedido) {
+  onSubmit(value: Pedido): void {
     
     if(!this.pedidoForm.valid) return;
  
@@ -102,7 +103,11 @@ export class FormularioComponent implements OnInit {
     this.pedidosService.postPedido(datosEnviar).subscribe(resp => console.log(resp));
   }
   
-
+  onMapClick($event: Direccion): void {
+    this.pedidoForm.controls.ciudadComercio.setValue("Córdoba Capital");
+    this.pedidoForm.controls.calleComercio.setValue($event.calle);
+    this.pedidoForm.controls.numeroComercio.setValue($event.numero);
+  }
 }
 
 
