@@ -3,10 +3,10 @@ export interface Resumen {
     detalleUbicacionComercio: string,
     ciudadComercio: string,
     calleComercio: string,
-    numeroComercio:  number,
+    numeroComercio:  string,
     ciudadCliente: string,
     calleCliente: string,
-    numeroCliente:  number,
+    numeroCliente:  string,
     detalleUbicacionCliente: string,
     formaDePago: string,
     fechaPedido: string

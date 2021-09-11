@@ -1,18 +1,14 @@
-import { Ciudad } from "./ciudade";
-import { ModoPago } from "./modoPago";
-
 export interface Pedido {
-    producto: string,
-    detalleUbicacionComercio: string,
+    descripcionProducto: string,
     ciudadComercio: string,
     calleComercio: string,
-    numeroComercio:  number,
+    numeroComercio: string,
+    detalleComercio: string,
     ciudadCliente: string,
     calleCliente: string,
-    numeroCliente:  number,
-    detalleUbicacionCliente: string,
-    formaDePago: string,
-    fechaPedido: string
-
+    numeroCliente: string,
+    detalleCliente: string,
+    fechaPedido: string,
+    metodoPago: string
 }
 

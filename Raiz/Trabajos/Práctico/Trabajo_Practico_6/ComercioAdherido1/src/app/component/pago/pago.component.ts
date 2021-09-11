@@ -12,8 +12,20 @@ import { Resumen } from 'src/app/models/resumen';
   styleUrls: ['./pago.component.css']
 })
 export class PagoComponent implements OnInit {
-  @Input() datosEnviados: Pedido;
-  datosResumen: Resumen;
+  @Input() datosEnviados: Pedido = {
+    descripcionProducto: "",
+    ciudadComercio: "",
+    calleComercio: "",
+    numeroComercio: "",
+    detalleComercio: "",
+    ciudadCliente: "",
+    calleCliente: "",
+    numeroCliente: "",
+    detalleCliente: "",
+    fechaPedido: "",
+    metodoPago: "",
+  };
+  datosResumen: Resumen | undefined;
   pagoTarjetaForm: FormGroup;
   pagoEfectivoForm: FormGroup;
   constructor(private router: Router
@@ -41,28 +53,28 @@ export class PagoComponent implements OnInit {
     console.log(this.datosEnviados)
   }
   onSubmit(value: Pago) {
-    if(this.datosEnviados.formaDePago == "Efectivo"){
+    if(this.datosEnviados?.metodoPago == "Efectivo"){
       console.log("Efectivo",this.pagoEfectivoForm.value);
       this.router.navigate(['/']);
     }else{
       console.log("Tarjeta",this.pagoEfectivoForm.value);
     }
     this.datosResumen = {
-      producto: this.datosEnviados.producto,
-    detalleUbicacionComercio: this.datosEnviados.detalleUbicacionComercio,
-    ciudadComercio: this.datosEnviados.ciudadComercio,
-    calleComercio: this.datosEnviados.calleComercio,
-    numeroComercio:  this.datosEnviados.numeroComercio,
-    ciudadCliente: this.datosEnviados.ciudadCliente,
-    calleCliente: this.datosEnviados.calleCliente,
-    numeroCliente:  this.datosEnviados.numeroCliente,
-    detalleUbicacionCliente: this.datosEnviados.detalleUbicacionCliente,
-    formaDePago: this.datosEnviados.formaDePago,
-    fechaPedido: this.datosEnviados.fechaPedido,
-    monto: value.monto,
-    numeroDeTarjeta: value.numeroDeTarjeta,
-    nombreTitular: value.nombreTitular,
-    apellidoTitular: value.apellidoTitular,
+      producto: this.datosEnviados?.descripcionProducto,
+      detalleUbicacionComercio: this.datosEnviados?.detalleComercio,
+      ciudadComercio: this.datosEnviados.ciudadComercio,
+      calleComercio: this.datosEnviados.calleComercio,
+      numeroComercio:  this.datosEnviados.numeroComercio,
+      ciudadCliente: this.datosEnviados.ciudadCliente,
+      calleCliente: this.datosEnviados.calleCliente,
+      numeroCliente:  this.datosEnviados.numeroCliente,
+      detalleUbicacionCliente: this.datosEnviados.detalleCliente,
+      formaDePago: this.datosEnviados.metodoPago,
+      fechaPedido: this.datosEnviados.fechaPedido,
+      monto: value.monto,
+      numeroDeTarjeta: value.numeroDeTarjeta,
+      nombreTitular: value.nombreTitular,
+      apellidoTitular: value.apellidoTitular,
     }
     const dialoRef = this.dialog.open(ResumenComponent, {data: this.datosResumen});
     dialoRef.afterClosed().subscribe((res) => {

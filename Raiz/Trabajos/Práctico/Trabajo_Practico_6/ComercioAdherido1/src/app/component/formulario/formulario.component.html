@@ -20,7 +20,7 @@
       <p>Dirección del comercio:</p>
       <br/>
       <label for="ciudadComercio"> Ciudad del comercio: </label>
-      <select class="form-control" [(ngModel)]="verSeleccionCiudadComercio" formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
+      <select class="form-control" formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
         <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
        
       </select>
@@ -43,7 +43,7 @@
       <p>Dirección del Cliente:</p>
       <br/>
       <label for="ciudadCliente"> Ciudad del cliente: </label>
-      <select class="form-control" [(ngModel)]="verSeleccionCiudadCliente" formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
+      <select class="form-control" formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
         <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
        
       </select>
@@ -60,9 +60,9 @@
       
       <br/>
       <br/>
-      <label for="ciudadesClientes"> Detalle Ubicacion de Comercio: </label>
+      <label for="detalleUbicacionCliente"> Detalle Ubicacion de Comercio: </label>
       <br>
-      <textarea id="ciudadesClientes" type="textarea" formControlName="ciudadesClientes" rows="3" cols="20"></textarea>
+      <textarea id="detalleUbicacionCliente" type="textarea" formControlName="detalleUbicacionCliente" rows="3" cols="20"></textarea>
    
       
       <label for="fechaPedido"> Fecha de pedido: </label>
@@ -72,7 +72,7 @@
       <p>Pago:</p>
       
         <label for="formaDePago"> Seleccione una forma de pago: </label>
-      <select class="form-control" [(ngModel)]="verSeleccionPago"  formControlName="formaDePago" name="formaDePago" id="formaDePago">
+      <select class="form-control" formControlName="formaDePago" name="formaDePago" id="formaDePago">
         <option *ngFor="let opt of modosPagoDisponible" value="{{opt.modo}}">{{opt.modo}}</option>
        
       </select>
@@ -86,13 +86,9 @@
       <button type="submit" [disabled]="pedidoForm.invalid" >Confirmar Pedido</button>
       <br>
       
-      <div *ngIf="datosEnviar.formaDePago !== ''">
+      <div *ngIf="datosEnviar.metodoPago !== ''">
         <h3 class="text-center text-primary font-weight-bolder">Metodos de pagos</h3>
         <app-pago [datosEnviados]="datosEnviar"></app-pago>
       </div>
-      
-      
-     
-      
     </form>
   </div>
