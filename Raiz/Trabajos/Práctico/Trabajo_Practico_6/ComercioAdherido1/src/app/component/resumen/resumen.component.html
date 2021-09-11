@@ -1,0 +1,40 @@
+<h3>Resumen de pedido</h3>
+<table>
+    <tr>
+        <td> <strong>Dato Producto</strong></td>
+    <tr>
+      <td>Producto: {{data.producto}}</td>
+    </tr>
+    <tr>
+        <td><strong>Datos Comercio</strong></td>
+      </tr>
+    <tr>
+
+      <td>Ciudad: {{data.ciudadComercio}}</td>
+      <td>Calle: {{data.calleComercio}}</td>
+      <td>Numero: {{data.numeroComercio}}</td>
+      <td>Detalle: {{data.detalleUbicacionComercio}}</td>
+    </tr>
+    <tr>
+        <td><strong>Datos Cliente</strong></td>
+      </tr>
+    <tr>
+        <td>Ciudad: {{data.ciudadCliente}}</td>
+        <td>Calle: {{data.calleCliente}}</td>
+        <td>Numero: {{data.numeroCliente}}</td>
+        <td>Detalle: {{data.detalleUbicacionCliente}}</td>
+      </tr>
+      <tr>
+        <td><strong>Datos Pago</strong></td>
+      </tr>
+      <tr>
+        <td>Forma de pago: {{data.formaDePago}}</td>
+        <td>Monto: {{data.monto}}</td>
+        
+      </tr>
+      <tr>
+        <td *ngIf="data.formaDePago == 'TarjetaVISA'">Nombre titular: {{data.nombreTitular}}</td>
+        <td *ngIf="data.formaDePago == 'TarjetaVISA'">Apellido titular: {{data.apellidoTitular}}</td>
+      </tr>
+  </table>
+  <button type="botton" (click)="cerrar()" >Cerrar</button>

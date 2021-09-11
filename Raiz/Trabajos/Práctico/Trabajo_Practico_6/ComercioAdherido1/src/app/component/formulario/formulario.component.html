@@ -1,0 +1,100 @@
+<div class="container mt-2">
+    <h3 class="text-center text-primary font-weight-bolder">Realizar pedido de lo que sea</h3>
+    <br>
+    <form [formGroup]="pedidoForm" (ngSubmit)="onSubmit(pedidoForm.value)">
+    
+     
+      <label for="producto"> Producto: </label>
+      <br>
+      <textarea id="producto" type="textarea" formControlName="producto" rows="3" cols="20"></textarea>
+ 
+      <br>    
+      <label for="foto">Adjunte una foto de lo que busca (opcional)</label>
+      <br>
+              <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId">
+              <br>
+              <small id="fileHelpId" class="form-text text-muted">(Formato JPG, 5MB max)</small>
+      
+
+      <br>  
+      <p>Dirección del comercio:</p>
+      <br/>
+      <label for="ciudadComercio"> Ciudad del comercio: </label>
+      <select class="form-control" [(ngModel)]="verSeleccionCiudadComercio"  formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
+        <option value="">Ciudades</option>
+        <option *ngFor="let opt of ciudadesComercio" value="{{opt.nombre}}">{{opt.nombre}}</option>
+       
+      </select>
+      
+      <br/>
+    
+      <label for="calleComercio"> Calle del comercio: </label>
+      <input id="calleComercio" type="text" formControlName="calleComercio">
+    
+      <br/>
+      
+      <label for="numeroComercio"> Numero del comercio: </label>
+      <input id="numeroComercio" type="text" formControlName="numeroComercio">
+      
+      <br/>
+      <label for="detalleUbicacionComercio"> Detalle Ubicacion de Comercio: </label>
+      <br>
+      <textarea id="detalleUbicacionComercio" type="textarea" formControlName="detalleUbicacionComercio" rows="3" cols="20"></textarea>
+   
+      <p>Dirección del Cliente:</p>
+      <br/>
+      <label for="ciudadCliente"> Ciudad del cliente: </label>
+      <select class="form-control" [(ngModel)]="verSeleccionCiudadCliente"  formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
+        <option value="">Ciudades</option>
+        <option *ngFor="let opt of ciudadesClientes" value="{{opt.nombre}}">{{opt.nombre}}</option>
+       
+      </select>
+      
+      <br/>
+    
+      <label for="calleCliente"> Calle del cliente: </label>
+      <input id="calleCliente" type="text" formControlName="calleCliente">
+    
+      <br/>
+      
+      <label for="numeroCliente"> Numero de cliente: </label>
+      <input id="numeroCliente" type="text" formControlName="numeroCliente">
+      
+      <br/>
+      <br/>
+      <label for="ciudadesClientes"> Detalle Ubicacion de Comercio: </label>
+      <br>
+      <textarea id="ciudadesClientes" type="textarea" formControlName="ciudadesClientes" rows="3" cols="20"></textarea>
+   
+      
+      <label for="fechaPedido"> Fecha de pedido: </label>
+      <input id="fechaPedido" type="text" formControlName="fechaPedido">
+    
+      <br/>
+      <p>Pago:</p>
+      
+        <label for="formaDePago"> Seleccione una forma de pago: </label>
+      <select class="form-control" [(ngModel)]="verSeleccionPago"  formControlName="formaDePago" name="formaDePago" id="formaDePago">
+        <option *ngFor="let opt of modosPago" value="{{opt.modo}}">{{opt.modo}}</option>
+       
+      </select>
+      
+      
+      
+      
+   
+      <br/>
+      
+      <button type="submit" [disabled]="pedidoForm.invalid" >Confirmar Pedido</button>
+      <br>
+      
+      <div *ngIf="datosEnviar.formaDePago !== ''">
+        <h3 class="text-center text-primary font-weight-bolder">Metodos de pagos</h3>
+        <app-pago [datosEnviados]="datosEnviar"></app-pago>
+      </div>
+      
+      
+     
+      
+    </form>
+  </div>
