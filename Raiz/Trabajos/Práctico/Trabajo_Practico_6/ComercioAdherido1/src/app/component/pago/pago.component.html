@@ -1,0 +1,63 @@
+<div class="container mt-2">
+    <div *ngIf="datosEnviados.metodoPago == 'TarjetaVISA'">
+      
+      <br>
+      <form [formGroup]="pagoTarjetaForm" (ngSubmit)="onSubmit(pagoTarjetaForm.value)">
+      
+        
+        <label for="monto"> Monto: </label>
+  
+        <input id="monto" type="number" formControlName="monto">
+   
+        <br/>    
+        
+      
+        <label for="numeroDeTarjeta"> NumeroDeTarjeta: </label>
+        <input id="numeroDeTarjeta" type="number" formControlName="numeroDeTarjeta">
+        
+        
+        <br/>
+      
+        <label for="nombreTitular">   NombreTitular: </label>
+        <input id="nombreTitular" type="text" formControlName="nombreTitular">
+      
+        <br/>
+        <label for="apellidoTitular"> ApellidoTitular: </label>
+        <input id="apellidoTitular" type="text" formControlName="apellidoTitular">
+      
+        <br/>
+        
+        <label for="fechaNacimiento"> FechaNacimiento: </label>
+        <input id="fechaNacimiento" type="text" formControlName="fechaNacimiento">
+        
+        <br/>
+     
+        
+        <label for="codigoSeguridad"> CodigoSeguridad: </label>
+        <input id="codigoSeguridad" type="text" formControlName="codigoSeguridad">
+      
+        <br/>
+    
+        <button type="submit" [disabled]="pagoEfectivoForm.invalid" >Pagar</button>
+        
+      </form>
+    </div>
+    <div *ngIf="datosEnviados.metodoPago == 'Efectivo'">
+
+      <h3 class="text-center text-primary font-weight-bolder">Realizar pedido de lo que sea</h3>
+      <br>
+      <form [formGroup]="pagoEfectivoForm" (ngSubmit)="onSubmit(pagoEfectivoForm.value)">
+      
+        
+        <label for="monto"> Monto: </label>
+  
+        <input id="monto" type="number" formControlName="monto">
+   
+        <br/>    
+        
+   
+        <button type="submit" [disabled]="pagoEfectivoForm.invalid" >Confirmar compra</button>
+        
+      </form>
+    </div>
+  </div>

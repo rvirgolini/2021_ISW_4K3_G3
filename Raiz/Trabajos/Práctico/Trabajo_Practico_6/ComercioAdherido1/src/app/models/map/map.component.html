@@ -1,0 +1,9 @@
+<form>
+    <input type="text" name="latLong" id="latLong" readonly [value]="marker.lat.toString()+' '+marker.lng.toString()">
+</form>
+<br>
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [minZoom]="zoom-1" (mapClick)="mapClicked($event)">
+    <agm-marker [latitude]="marker.lat" [longitude]="marker.lng">
+
+    </agm-marker>
+</agm-map>
