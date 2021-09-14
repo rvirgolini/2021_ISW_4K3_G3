@@ -1,19 +1,21 @@
 import { Marker } from '../../models/marker';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, OnChanges } from '@angular/core';
 import { Direccion } from '../../models/direccion';
 import {LocationService} from '../../services/location.service';
+import { Ciudad } from 'src/app/models/ciudade';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
 
-  lat: number = 0;
-  lng: number = 0;
+  @Input() ciudad: Ciudad = {nombre: 'Capital', latitud: -31.413972040086794, longitud: -64.18537430820507};
+  latitud: number = 0;
+  longitud: number = 0;
   zoom: number = 1;
-
+  
   @Output() direccion = new EventEmitter<Direccion>();
 
   marker: Marker = {
@@ -26,9 +28,13 @@ export class MapComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.lat = -31.413972040086794;
-    this.lng = -64.18537430820507;
     this.zoom = 14;
+  }
+
+  ngOnChanges(): void
+  {
+    this.latitud = this.ciudad.latitud;
+    this.longitud = this.ciudad.longitud;
   }
 
   mapClicked($event: any) {

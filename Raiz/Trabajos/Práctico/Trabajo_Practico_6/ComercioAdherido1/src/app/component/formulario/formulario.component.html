@@ -35,7 +35,7 @@
 
           <div class="form-group p-2">
             <label for="ciudadComercio"> Ciudad del comercio: </label>
-            <select class="form-control" formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio">
+            <select class="form-control" formControlName="ciudadComercio" name="ciudadComercio" id="ciudadComercio" (change)="onChange($event.target)">
               <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
             </select>
           </div>
@@ -56,7 +56,7 @@
           </div>
           
           <div class="container-mapa form-group p-2">
-            <app-map (direccion)="onMapClick($event)"></app-map>
+            <app-map [ciudad]="ciudadComercio" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
         
@@ -71,7 +71,7 @@
 
           <div class="form-group p-2">
             <label for="ciudadCliente"> Ciudad del cliente: </label>
-            <select class="form-control" formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente">
+            <select class="form-control" formControlName="ciudadCliente" name="ciudadCliente" id="ciudadCliente" (change)="onChange($event.target)" [selectedIndex]="1">
               <option *ngFor="let opt of ciudadesDisponibles" value="{{opt.nombre}}">{{opt.nombre}}</option>
             </select>
           </div>
@@ -92,7 +92,7 @@
           </div>
 
           <div class="container-mapa form-group p-2">
-            <app-map (direccion)="onMapClick($event)"></app-map>
+            <app-map [ciudad]="ciudadCliente" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
       </fieldset>
@@ -119,6 +119,11 @@
           </div>
 
           <div class="form-group p-2">
+            <label for="montoPagar">Monto a Pagar</label>
+            <input class="form-control" type="text" name="montoPagar" placeholder="5 peso" [disabled]="true">
+          </div>
+
+          <div class="form-group p-2">
             <label for="formaDePago"> Seleccione una forma de pago: </label>
             <select class="form-control" formControlName="formaDePago" name="formaDePago" id="formaDePago">
               <option *ngFor="let opt of modosPagoDisponible" value="{{opt.modo}}">{{opt.modo}}</option>
@@ -126,12 +131,6 @@
           </div>
 
           <div *ngIf="pagaConTarjeta()">
-            <div class="form-group p-2">
-              <label for="montoPagar">Monto a Pagar</label>
-              <input class="form-control" type="text" name="montoPagar" placeholder="5 peso" [disabled]="true">
- 
-            </div>
-
             <div class="form-group p-2">
               <label for="nombreTarjeta">Nombre en la Tarjeta</label>
               <input class="form-control" type="text" name="nombreTarjeta" placeholder="Juan Perez">

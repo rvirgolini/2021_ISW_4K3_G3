@@ -1,5 +1,7 @@
 export interface Ciudad {
-    nombre: string
+    nombre: string,
+    latitud: number,
+    longitud: number;
 }
 
-export const Ciudades: Ciudad[] = [{nombre:"Cordoba"},{nombre:"Jujuy"},{nombre:"Tucuman"},{nombre:"Formosa"}]
+// export const Ciudades: Ciudad[] = [{nombre:"Cordoba"},{nombre:"Jujuy"},{nombre:"Tucuman"},{nombre:"Formosa"}]

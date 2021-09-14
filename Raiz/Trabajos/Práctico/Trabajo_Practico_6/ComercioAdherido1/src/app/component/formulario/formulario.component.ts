@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pedido } from 'src/app/models/pedido';
 import { Router } from '@angular/router';
-import { Ciudad, Ciudades } from 'src/app/models/ciudade';
+import { Ciudad} from 'src/app/models/ciudade';
 import { ModoPago, ModoPagos } from 'src/app/models/modoPago';
 import { CiudadesService } from 'src/app/services/ciudades.service';
 import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
@@ -35,9 +35,12 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 1;
+  paginaFormulario = 2;
 
-  pedidoForm: FormGroup;
+  ciudadComercio: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
+  ciudadCliente: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
+
+  pedidoForm: FormGroup;  
   constructor(private router: Router
     , private formBuilder: FormBuilder
     , private ciudadesService: CiudadesService
@@ -62,7 +65,9 @@ export class FormularioComponent implements OnInit {
     this.ciudadesService.getCiudades().subscribe(resp => {
       Object.keys(resp).
       forEach(key => this.ciudadesDisponibles.push({
-                                                nombre: resp[key].nombre
+                                                nombre: resp[key].nombre,
+                                                latitud: resp[key].latitud,
+                                                longitud: resp[key].longitud
                                                 }));
     });
 
@@ -100,9 +105,23 @@ export class FormularioComponent implements OnInit {
     this.pedidosService.postPedido(datosEnviar).subscribe(resp => console.log(resp));
   }
   
-  onMapClick($event: Direccion): void {
-    console.log($event);
+  onChange($target:any)
+  {
+    if($target === null) return;
 
+    let ciudad: Ciudad | undefined = this.ciudadesDisponibles
+                                    .find(ciudad => ciudad.nombre == $target.value);
+    if(ciudad === undefined) return;
+    
+    if(this.paginaFormulario == 2)
+    {
+      this.ciudadComercio = ciudad;
+      return;
+    } 
+    this.ciudadCliente = ciudad;
+  }
+
+  onMapClick($event: Direccion): void {
     let ciudad = this.getCiudad($event.ciudad);
     let calle = $event.calle;
     let numero = $event.numero;
