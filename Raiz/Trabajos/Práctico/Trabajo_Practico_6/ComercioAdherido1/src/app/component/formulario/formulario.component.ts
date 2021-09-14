@@ -35,7 +35,7 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 2;
+  paginaFormulario = 1;
 
   pedidoForm: FormGroup;
   constructor(private router: Router
@@ -106,9 +106,18 @@ export class FormularioComponent implements OnInit {
     let ciudad = this.getCiudad($event.ciudad);
     let calle = $event.calle;
     let numero = $event.numero;
-    this.pedidoForm.controls.ciudadComercio.setValue(ciudad);
-    this.pedidoForm.controls.calleComercio.setValue(calle);
-    this.pedidoForm.controls.numeroComercio.setValue(numero);
+
+    let controles = this.pedidoForm.controls;
+    if(this.paginaFormulario == 2)
+    {
+      controles.ciudadComercio.setValue(ciudad);
+      controles.calleComercio.setValue(calle);
+      controles.numeroComercio.setValue(numero);
+      return;
+    }
+    controles.ciudadCliente.setValue(ciudad);
+    controles.calleCliente.setValue(calle);
+    controles.numeroCliente.setValue(numero);
   }
 
   siguientePagina(): void {
@@ -118,6 +127,13 @@ export class FormularioComponent implements OnInit {
   anteriorPagina(): void {
     if(this.paginaFormulario>1)
       this.paginaFormulario--;
+  }
+
+  pagaConTarjeta() : boolean
+  {
+    let metodoPago:string = this.pedidoForm.value.formaDePago;
+
+    return metodoPago.includes("tarjeta");
   }
 
   private getCiudad(nombreResultado: string) : string
