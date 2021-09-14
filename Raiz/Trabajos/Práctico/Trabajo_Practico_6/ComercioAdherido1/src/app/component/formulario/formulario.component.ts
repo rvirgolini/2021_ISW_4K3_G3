@@ -35,7 +35,9 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 2;
+  paginaFormulario = 4;
+
+  entregaInmediata = false;
 
   ciudadComercio: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
   ciudadCliente: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
@@ -121,6 +123,22 @@ export class FormularioComponent implements OnInit {
     this.ciudadCliente = ciudad;
   }
 
+  checkOnChange($event:any)
+  {
+    if($event.target == null) return;
+
+    this.entregaInmediata = $event.target.checked;
+    let fechaControl = this.pedidoForm.controls['fechaPedido'];
+    if(this.entregaInmediata)
+    {
+      fechaControl.setValue(this.currentDate());
+      fechaControl.disable();
+      return;
+    }
+    fechaControl.setValue("");
+    fechaControl.enable();
+  }
+
   onMapClick($event: Direccion): void {
     let ciudad = this.getCiudad($event.ciudad);
     let calle = $event.calle;
@@ -170,6 +188,15 @@ export class FormularioComponent implements OnInit {
   private cleanString(toClean: string) : string
   {
     return toClean.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase()
+  }
+
+  private currentDate() : string
+  {
+    let ISODate = new Date().toISOString();
+    let date = ISODate.substring(0,10);
+    let time = ISODate.substring(11,19);
+    
+    return `${date} ${time}`;
   }
 }
 

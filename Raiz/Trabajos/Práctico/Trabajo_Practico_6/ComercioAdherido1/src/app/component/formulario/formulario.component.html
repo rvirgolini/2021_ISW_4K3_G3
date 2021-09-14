@@ -2,7 +2,7 @@
 
     <div class="p-2">
       <a (click)="anteriorPagina()">
-        <i class="far fa-arrow-alt-circle-left"></i>  
+        <i class="img-fluid far fa-arrow-alt-circle-left"></i>  
       </a>
     </div>
 
@@ -104,9 +104,16 @@
             <h2 class="text-center">Momento de entrega</h2>
           </div>
 
+          <div class="input-group p-2">
+            <div class="input-group-prepend">
+              <input type="checkbox" (change)="checkOnChange($event)">
+            </div>
+            <span class="p-2"> Entrega inmediata </span>
+          </div>
+
           <div class="form-group p-2">
             <label for="fechaPedido"> Fecha de pedido: </label>
-            <input class="form-control" id="fechaPedido" type="datetime-local" formControlName="fechaPedido">
+            <input class="form-control" id="fechaPedido" type="text" placeholder="aaaa-MM-dd hh:mm:ss" formControlName="fechaPedido">
           </div>
         </div>
       </fieldset>
