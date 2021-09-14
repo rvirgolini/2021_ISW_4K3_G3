@@ -75,6 +75,10 @@
           <label for="detalleUbicacionCliente"> Detalle Ubicacion del Cliente: </label>
           <textarea class="form-control" id="detalleUbicacionCliente" type="textarea" formControlName="detalleUbicacionCliente" rows="3" cols="20"></textarea>
         </div>
+
+        <div class="container-mapa form-group">
+          <app-map (direccion)="onMapClick($event)"></app-map>
+        </div>
       </fieldset>
       
       <fieldset *ngIf="paginaFormulario===4">

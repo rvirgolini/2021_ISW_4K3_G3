@@ -11,17 +11,13 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { Direccion } from 'src/app/models/direccion';
 
 
-
 @Component({
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent implements OnInit {
-  ciudadesComercio = Ciudades
-  ciudadesClientes = Ciudades
   ciudadesDisponibles: Ciudad[] = [];
-  modosPago = ModoPagos
   modosPagoDisponible: ModoPago[] = [];
   
   datosEnviar: Pedido = 
@@ -39,7 +35,7 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 1;
+  paginaFormulario = 2;
 
   pedidoForm: FormGroup;
   constructor(private router: Router
@@ -81,7 +77,6 @@ export class FormularioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.ciudadesDisponibles);
   }
  
   onSubmit(value: Pedido): void {
@@ -106,9 +101,14 @@ export class FormularioComponent implements OnInit {
   }
   
   onMapClick($event: Direccion): void {
-    this.pedidoForm.controls.ciudadComercio.setValue("Córdoba Capital");
-    this.pedidoForm.controls.calleComercio.setValue($event.calle);
-    this.pedidoForm.controls.numeroComercio.setValue($event.numero);
+    console.log($event);
+
+    let ciudad = this.getCiudad($event.ciudad);
+    let calle = $event.calle;
+    let numero = $event.numero;
+    this.pedidoForm.controls.ciudadComercio.setValue(ciudad);
+    this.pedidoForm.controls.calleComercio.setValue(calle);
+    this.pedidoForm.controls.numeroComercio.setValue(numero);
   }
 
   siguientePagina(): void {
@@ -118,6 +118,12 @@ export class FormularioComponent implements OnInit {
   anteriorPagina(): void {
     if(this.paginaFormulario>1)
       this.paginaFormulario--;
+  }
+
+  private getCiudad(nombreResultado: string) : string
+  {
+    let ciudadEncontrada = this.ciudadesDisponibles.find(ciudad => ciudad.nombre.includes(nombreResultado));
+    return ciudadEncontrada === undefined? "" : ciudadEncontrada.nombre;
   }
 }
 
