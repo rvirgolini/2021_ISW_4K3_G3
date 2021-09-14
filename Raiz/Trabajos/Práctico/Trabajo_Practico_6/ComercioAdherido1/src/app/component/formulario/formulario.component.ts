@@ -39,6 +39,8 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
+  paginaFormulario = 1;
+
   pedidoForm: FormGroup;
   constructor(private router: Router
     , private formBuilder: FormBuilder
@@ -107,6 +109,15 @@ export class FormularioComponent implements OnInit {
     this.pedidoForm.controls.ciudadComercio.setValue("Córdoba Capital");
     this.pedidoForm.controls.calleComercio.setValue($event.calle);
     this.pedidoForm.controls.numeroComercio.setValue($event.numero);
+  }
+
+  siguientePagina(): void {
+    this.paginaFormulario++;
+  }
+
+  anteriorPagina(): void {
+    if(this.paginaFormulario>1)
+      this.paginaFormulario--;
   }
 }
 
