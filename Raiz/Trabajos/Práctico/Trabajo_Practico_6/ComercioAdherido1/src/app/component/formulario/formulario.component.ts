@@ -122,8 +122,19 @@ export class FormularioComponent implements OnInit {
 
   private getCiudad(nombreResultado: string) : string
   {
-    let ciudadEncontrada = this.ciudadesDisponibles.find(ciudad => ciudad.nombre.includes(nombreResultado));
+    let clean = this.cleanString(nombreResultado);
+    let ciudadEncontrada = this.ciudadesDisponibles
+                          .find(ciudad => {
+                            let ciudadLimpia = this.cleanString(ciudad.nombre);
+                            return ciudadLimpia.includes(clean);
+                          });
     return ciudadEncontrada === undefined? "" : ciudadEncontrada.nombre;
+  }
+
+  //Saca los acentos porque habia un problema al comparar jesús maría
+  private cleanString(toClean: string) : string
+  {
+    return toClean.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase()
   }
 }
 
