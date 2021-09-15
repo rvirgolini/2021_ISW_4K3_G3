@@ -9,6 +9,7 @@ import { CiudadesService } from 'src/app/services/ciudades.service';
 import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { Direccion } from 'src/app/models/direccion';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -35,9 +36,11 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 4;
+  paginaFormulario = 1;
 
   entregaInmediata = false;
+
+  imagenProducto: File | null = null;
 
   ciudadComercio: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
   ciudadCliente: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
@@ -48,6 +51,7 @@ export class FormularioComponent implements OnInit {
     , private ciudadesService: CiudadesService
     , private metodosPagoService: MetodosPagoService
     , private pedidosService: PedidosService
+    , private storage: AngularFireStorage
     ) { 
     
     this.pedidoForm = this.formBuilder.group({
@@ -105,6 +109,11 @@ export class FormularioComponent implements OnInit {
     }
     
     this.pedidosService.postPedido(datosEnviar).subscribe(resp => console.log(resp));
+
+    if(this.imagenProducto != null)
+    {
+      this.storage.upload(`${this.imagenProducto?.name}`, this.imagenProducto);    
+    }
   }
   
   onChange($target:any)
@@ -137,6 +146,16 @@ export class FormularioComponent implements OnInit {
     }
     fechaControl.setValue("");
     fechaControl.enable();
+  }
+
+  onFileSelected(eventTarget : any)
+  {
+    if(eventTarget == null) return;
+    if(eventTarget.files.item(0).size > 5*1024*1024){
+      alert("La imagen no debe superar los 5mb");
+      return;
+    }
+    this.imagenProducto = eventTarget.files.item(0);
   }
 
   onMapClick($event: Direccion): void {
