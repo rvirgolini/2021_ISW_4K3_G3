@@ -109,7 +109,7 @@ export class FormularioComponent implements OnInit {
       ciudadCliente: this.pedidoForm.value.ciudadCliente,
       calleCliente: this.pedidoForm.value.calleCliente,
       numeroCliente: this.pedidoForm.value.numeroCliente,
-      detalleCliente: this.pedidoForm.value.detalleComercio,
+      detalleCliente: this.pedidoForm.value.detalleCliente,
       fechaPedido: this.pedidoForm.value.fechaPedido,
       metodoPago: this.pedidoForm.value.formaDePago,
     }
