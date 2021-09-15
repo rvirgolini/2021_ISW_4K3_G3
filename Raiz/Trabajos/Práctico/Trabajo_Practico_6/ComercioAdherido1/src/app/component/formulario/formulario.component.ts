@@ -117,6 +117,11 @@ export class FormularioComponent implements OnInit {
     
 
     this.pedidosService.postPedido(datosEnviarDB).subscribe(resp => console.log(resp));
+
+    if(this.imagenProducto != null)
+    {
+      this.storage.upload(`${this.imagenProducto?.name}`, this.imagenProducto);    
+    }
   }
   onChangeDireccion($target: any){
       this.direccionOk = $target.value;
@@ -183,6 +188,7 @@ export class FormularioComponent implements OnInit {
     controles.calleCliente.setValue(calle);
     controles.numeroCliente.setValue(numero);
   }
+
 
   siguientePagina(): void {
     this.paginaFormulario++;
