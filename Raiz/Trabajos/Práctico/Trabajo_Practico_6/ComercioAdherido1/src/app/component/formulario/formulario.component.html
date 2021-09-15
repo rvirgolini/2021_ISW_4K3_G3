@@ -110,7 +110,7 @@
             <label for="numeroCliente"> Numero de cliente: </label>
             <input class="form-control" id="numeroCliente" type="text" formControlName="numeroCliente">
           </div>
-          onChangeDireccion
+          
           <div class="form-group p-2">
             <label for="detalleUbicacionCliente"> Detalle Ubicacion del Cliente: </label>
             <textarea class="form-control" id="detalleUbicacionCliente" type="textarea" formControlName="detalleUbicacionCliente" rows="3" cols="20"></textarea>
@@ -178,13 +178,13 @@
           </div>
         </div>
         <div class="p-2 w-100" *ngIf="paginaFormulario === 5" >
-          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+         
         </div>
       </fieldset>
 
       <div class="d-flex mt-1">
         <div class="p-2 w-100" *ngIf="paginaFormulario === 5">
-          <button class="btn btn-primary w-100" type="submit" [disabled]="pedidoForm.invalid">Confirmar Pedido</button>
+          <button class="btn btn-primary w-100" type="submit" >Confirmar Pedido</button>
         </div>
         
       </div>

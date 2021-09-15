@@ -93,10 +93,7 @@ export class PagoComponent implements OnInit {
       nombreTitular: value.nombreTitular,
       apellidoTitular: value.apellidoTitular,
     }
-    const dialoRef = this.dialog.open(ResumenComponent, {data: this.datosResumen});
-    dialoRef.afterClosed().subscribe((res) => {
-      console.log(res);
-    });
+   
     
     
 

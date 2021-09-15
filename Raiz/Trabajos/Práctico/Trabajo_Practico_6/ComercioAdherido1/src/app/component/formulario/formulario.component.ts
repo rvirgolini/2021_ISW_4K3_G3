@@ -99,8 +99,7 @@ export class FormularioComponent implements OnInit {
  }
   onSubmit(value: Pedido): void {
     
-    if(!this.pedidoForm.valid) return;
- 
+    
     let datosEnviarDB:Pedido = {
       descripcionProducto: this.pedidoForm.value.producto,
       ciudadComercio: this.pedidoForm.value.ciudadComercio,
@@ -114,6 +113,7 @@ export class FormularioComponent implements OnInit {
       fechaPedido: this.pedidoForm.value.fechaPedido,
       metodoPago: this.pedidoForm.value.formaDePago,
     }
+    this.router.navigate(['/']);
     
 
     this.pedidosService.postPedido(datosEnviarDB).subscribe(resp => console.log(resp));
