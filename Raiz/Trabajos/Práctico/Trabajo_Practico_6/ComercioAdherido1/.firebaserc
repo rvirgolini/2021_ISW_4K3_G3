@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "k3-isw-tp6": {
+      "hosting": {
+        "ComercioAdherido": [
+          "k3-isw-tp6"
+        ]
+      }
+    }
+  }
+}
