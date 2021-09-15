@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 import { Pedido } from 'src/app/models/pedido';
 import { Router } from '@angular/router';
 import { Ciudad} from 'src/app/models/ciudade';
@@ -20,8 +20,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class FormularioComponent implements OnInit {
   ciudadesDisponibles: Ciudad[] = [];
   modosPagoDisponible: ModoPago[] = [];
-  
-  datosEnviar: Pedido = 
+  datosEnviarTipoPagos: string = "";
+  datosEnviarDB: Pedido = 
   {
     descripcionProducto: "",
     ciudadComercio: "",
@@ -39,6 +39,8 @@ export class FormularioComponent implements OnInit {
   paginaFormulario = 1;
 
   entregaInmediata = false;
+  pruductoOK = "";
+  direccionOk = "";
 
   imagenProducto: File | null = null;
 
@@ -53,17 +55,17 @@ export class FormularioComponent implements OnInit {
     , private pedidosService: PedidosService
     , private storage: AngularFireStorage
     ) { 
-    
+      let docDate = 'Jun 15, 2015, 21:43:11 UTC'; //You'll want to change this to UTC or it can mess up your date.
     this.pedidoForm = this.formBuilder.group({
       producto: ['', [Validators.required]],
       ciudadComercio: ['', [Validators.required]],
       calleComercio: [ '', [Validators.required]],
       numeroComercio: [ '', [Validators.required]],
-      detalleUbicacionComercio: ['', [Validators.required]],
+      detalleComercio: ['', [Validators.required]],
       ciudadCliente: ['', [Validators.required]],
       calleCliente: [ '', [Validators.required]],
       numeroCliente: [ '', [Validators.required]],
-      detalleUbicacionCliente: ['', [Validators.required]],
+      detalleCliente: ['', [Validators.required]],
       formaDePago: ['', [Validators.required]],
       fechaPedido: ['', [Validators.required]]
     });
@@ -78,6 +80,7 @@ export class FormularioComponent implements OnInit {
     });
 
     this.metodosPagoService.getMetodosPago().subscribe(resp => {
+      console.log(resp)
       Object.keys(resp)
       .filter(key => resp[key].activo)
       .forEach(activeKey =>this.modosPagoDisponible.push({
@@ -89,33 +92,38 @@ export class FormularioComponent implements OnInit {
 
   ngOnInit(): void {
   }
- 
+  
+ enviarHijo(): void{
+  this.datosEnviarTipoPagos = this.pedidoForm.value.formaDePago;
+  console.log(this.datosEnviarTipoPagos)
+ }
   onSubmit(value: Pedido): void {
     
     if(!this.pedidoForm.valid) return;
  
-    let datosEnviar:Pedido = {
+    let datosEnviarDB:Pedido = {
       descripcionProducto: this.pedidoForm.value.producto,
       ciudadComercio: this.pedidoForm.value.ciudadComercio,
       calleComercio: this.pedidoForm.value.calleComercio,
       numeroComercio: this.pedidoForm.value.numeroComercio,
-      detalleComercio: this.pedidoForm.value.detalleUbicacionComercio,
+      detalleComercio: this.pedidoForm.value.detalleComercio,
       ciudadCliente: this.pedidoForm.value.ciudadCliente,
       calleCliente: this.pedidoForm.value.calleCliente,
       numeroCliente: this.pedidoForm.value.numeroCliente,
-      detalleCliente: this.pedidoForm.value.detalleUbicacionCliente,
+      detalleCliente: this.pedidoForm.value.detalleComercio,
       fechaPedido: this.pedidoForm.value.fechaPedido,
       metodoPago: this.pedidoForm.value.formaDePago,
     }
     
-    this.pedidosService.postPedido(datosEnviar).subscribe(resp => console.log(resp));
 
-    if(this.imagenProducto != null)
-    {
-      this.storage.upload(`${this.imagenProducto?.name}`, this.imagenProducto);    
-    }
+    this.pedidosService.postPedido(datosEnviarDB).subscribe(resp => console.log(resp));
   }
-  
+  onChangeDireccion($target: any){
+      this.direccionOk = $target.value;
+  }
+  onChangeProducto($target:any){
+        this.pruductoOK = $target.value;
+  }
   onChange($target:any)
   {
     if($target === null) return;
@@ -179,10 +187,18 @@ export class FormularioComponent implements OnInit {
   siguientePagina(): void {
     this.paginaFormulario++;
   }
-
+  get producto(){
+    return this.pedidoForm.get("producto")  as FormControl
+   
+ }
+ get montoEfectivo(){
+  return this.pedidoForm.get("detalleComercio")  as FormControl
+ 
+}
   anteriorPagina(): void {
     if(this.paginaFormulario>1)
       this.paginaFormulario--;
+      
   }
 
   pagaConTarjeta() : boolean

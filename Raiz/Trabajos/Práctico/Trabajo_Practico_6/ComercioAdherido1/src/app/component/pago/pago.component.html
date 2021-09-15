@@ -1,62 +1,64 @@
 <div class="container mt-2">
-    <div *ngIf="datosEnviados.metodoPago == 'TarjetaVISA'">
+    <div *ngIf="datosEnviadosTipoPago === 'Pago con tarjeta de debito Visa'">
       
       <br>
-      <form [formGroup]="pagoTarjetaForm" (ngSubmit)="onSubmit(pagoTarjetaForm.value)">
+      <form [formGroup]="pagoTarjetaForm" (ngSubmit)="onSubmitTarjeta(pagoTarjetaForm.value)">
       
+        <div class="form-group p-2">
+          <label for="montoTarjeta">Monto a Pagar</label>
+          <input class="form-control" type="text" name="montoTarjeta" formControlName="montoTarjeta" placeholder="$5000" >
+        </div>
+        <div class="form-group p-2">
+          <label for="nombreTitular">Nombre de Titular</label>
+          <input class="form-control" type="text" name="nombreTitular" formControlName="nombreTitular" placeholder="Juan">
+        </div>
+        <div class="form-group p-2">
+          <label for="apellidoTitular">Apellido de Titular</label>
+          <input class="form-control" type="text" name="apellidoTitular" formControlName="apellidoTitular" placeholder="Perez">
+        </div>
+
+        <div class="form-group p-2">
+          <label for="numeroDeTarjeta">Numero de Tarjeta</label>
+          <input class="form-control" type="text" name="numeroDeTarjeta" formControlName="numeroDeTarjeta" placeholder="1234 1234 1234 1234">
+          
+                   <div class="form-control-feedback"
+                   >
+                 <p *ngIf="numeroDeTarjeta.errors?.pattern">No es una tarjeta valida Visa*
+                </p>
+                
+                         </div>
+        </div>
+
+        <div class="form-group p-2 d-flex flex-row">
+          <div class="form-group p-1">
+            <label for="fechaNacimiento">Fecha de Vencimiento</label>
+            <input class="form-control" type="text" name="fechaNacimiento" formControlName="fechaNacimiento" placeholder="05">
+          </div>
+
+          <div class="form-group p-1 ml-auto">
+            <label for="codigoTarjeta">Código de Seguridad</label>
+            <input class="form-control" type="text" name="codigoTarjeta" formControlName="codigoSeguridad" placeholder="123">
+          </div>
+        </div>
+        <button class="btn btn-primary w-100" type="submit" >Confirmar Pago</button>
         
-        <label for="monto"> Monto: </label>
-  
-        <input id="monto" type="number" formControlName="monto">
-   
-        <br/>    
-        
-      
-        <label for="numeroDeTarjeta"> NumeroDeTarjeta: </label>
-        <input id="numeroDeTarjeta" type="number" formControlName="numeroDeTarjeta">
-        
-        
-        <br/>
-      
-        <label for="nombreTitular">   NombreTitular: </label>
-        <input id="nombreTitular" type="text" formControlName="nombreTitular">
-      
-        <br/>
-        <label for="apellidoTitular"> ApellidoTitular: </label>
-        <input id="apellidoTitular" type="text" formControlName="apellidoTitular">
-      
-        <br/>
-        
-        <label for="fechaNacimiento"> FechaNacimiento: </label>
-        <input id="fechaNacimiento" type="text" formControlName="fechaNacimiento">
-        
-        <br/>
-     
-        
-        <label for="codigoSeguridad"> CodigoSeguridad: </label>
-        <input id="codigoSeguridad" type="text" formControlName="codigoSeguridad">
-      
-        <br/>
-    
-        <button type="submit" [disabled]="pagoEfectivoForm.invalid" >Pagar</button>
         
       </form>
     </div>
-    <div *ngIf="datosEnviados.metodoPago == 'Efectivo'">
-
-      <h3 class="text-center text-primary font-weight-bolder">Realizar pedido de lo que sea</h3>
-      <br>
-      <form [formGroup]="pagoEfectivoForm" (ngSubmit)="onSubmit(pagoEfectivoForm.value)">
-      
-        
-        <label for="monto"> Monto: </label>
-  
-        <input id="monto" type="number" formControlName="monto">
+    <div *ngIf=" datosEnviadosTipoPago === 'Pago en Efectivo' ">
+      <form [formGroup]="pagoEfectivoForm" (ngSubmit)="onSubmitEfectivo(pagoEfectivoForm.value)">
+        <div class="form-group p-2">
+          <label for="montoEfectivo">Monto a Pagar</label>
+          <input class="form-control" type="text" name="montoEfectivo" formControlName="montoEfectivo" placeholder="5 peso" >
+                  <div class="form-control-feedback"
+            *ngIf="montoEfectivo.invalid && (montoEfectivo.dirty || montoEfectivo.touched)">
+          <p *ngIf="montoEfectivo.errors?.required">Monto es requerido</p>
+         
+                  </div>
+        </div>
+              
    
-        <br/>    
-        
-   
-        <button type="submit" [disabled]="pagoEfectivoForm.invalid" >Confirmar compra</button>
+        <button class="btn btn-primary w-100" type="submit" [disabled]="pagoEfectivoForm.invalid">Confirmar Pago</button>
         
       </form>
     </div>
