@@ -9,6 +9,7 @@ import { CiudadesService } from 'src/app/services/ciudades.service';
 import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { Direccion } from 'src/app/models/direccion';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -35,11 +36,13 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 4;
+  paginaFormulario = 1;
 
   entregaInmediata = false;
   pruductoOK = "";
   direccionOk = "";
+
+  imagenProducto: File | null = null;
 
   ciudadComercio: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
   ciudadCliente: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
@@ -50,6 +53,7 @@ export class FormularioComponent implements OnInit {
     , private ciudadesService: CiudadesService
     , private metodosPagoService: MetodosPagoService
     , private pedidosService: PedidosService
+    , private storage: AngularFireStorage
     ) { 
       let docDate = 'Jun 15, 2015, 21:43:11 UTC'; //You'll want to change this to UTC or it can mess up your date.
     this.pedidoForm = this.formBuilder.group({
@@ -111,6 +115,7 @@ export class FormularioComponent implements OnInit {
       metodoPago: this.pedidoForm.value.formaDePago,
     }
     
+
     this.pedidosService.postPedido(datosEnviarDB).subscribe(resp => console.log(resp));
   }
   onChangeDireccion($target: any){
@@ -149,6 +154,16 @@ export class FormularioComponent implements OnInit {
     }
     fechaControl.setValue("");
     fechaControl.enable();
+  }
+
+  onFileSelected(eventTarget : any)
+  {
+    if(eventTarget == null) return;
+    if(eventTarget.files.item(0).size > 5*1024*1024){
+      alert("La imagen no debe superar los 5mb");
+      return;
+    }
+    this.imagenProducto = eventTarget.files.item(0);
   }
 
   onMapClick($event: Direccion): void {

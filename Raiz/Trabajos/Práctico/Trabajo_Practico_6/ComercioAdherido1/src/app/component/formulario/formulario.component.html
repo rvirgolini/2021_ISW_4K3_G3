@@ -24,7 +24,7 @@
          
                   </div>
             <label for="foto">Adjunte una foto de lo que busca (opcional)</label>
-            <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId">
+            <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId" (change)="onFileSelected($event.target)">
             <small id="fileHelpId" class="form-text text-muted">(Formato JPG, 5MB max)</small>
           </div>
         </div>
