@@ -17,11 +17,25 @@
   
           <div class="form-group p-2">
             <label for="producto"> Productos: </label>
-            <textarea class="form-control" id="producto" type="textarea" formControlName="producto" rows="3" cols="20"></textarea>
-
+            <textarea class="form-control" id="producto" type="textarea" formControlName="producto" rows="3" cols="20" (change)="onChangeProducto($event.target)" ></textarea>
+            <div class="form-control-feedback"
+            *ngIf="producto.invalid && (producto.dirty || producto.touched)">
+          <p *ngIf="producto.errors?.required">EL producto es requerido</p>
+         
+                  </div>
             <label for="foto">Adjunte una foto de lo que busca (opcional)</label>
             <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId">
             <small id="fileHelpId" class="form-text text-muted">(Formato JPG, 5MB max)</small>
+          </div>
+        </div>
+        <div *ngIf=" pruductoOK === '' " >
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 1" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
+          </div>
+        </div>
+        <div *ngIf=" pruductoOK !== '' " >
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 1" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
           </div>
         </div>
       </fieldset>
@@ -42,7 +56,7 @@
         
           <div class="form-group p-2">
             <label for="calleComercio"> Calle del comercio: </label>
-            <input class="form-control" id="calleComercio" type="text" formControlName="calleComercio">
+            <input class="form-control" id="calleComercio" type="text" formControlName="calleComercio" >
           </div>
         
           <div class="form-group p-2">
@@ -51,12 +65,23 @@
           </div>
           
           <div class="form-group p-2">
-            <label for="detalleUbicacionComercio"> Detalle Ubicacion de Comercio: </label>
-            <textarea class="form-control" id="detalleUbicacionComercio" type="textarea" formControlName="detalleUbicacionComercio" rows="3" cols="20"></textarea>
+            <label for="detalleComercio"> Detalle Ubicacion de Comercio: </label>
+            <textarea class="form-control" id="detalleComercio" type="textarea" formControlName="detalleComercio" rows="3" cols="20" (change)="onChangeDireccion($event.target)"></textarea>
+            
           </div>
           
           <div class="container-mapa form-group p-2">
             <app-map [ciudad]="ciudadComercio" (direccion)="onMapClick($event)"></app-map>
+          </div>
+        </div>
+        <div *ngIf="direccionOk === ''" >
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
+          </div>
+        </div>
+        <div *ngIf="direccionOk !== ''">
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
           </div>
         </div>
         
@@ -78,14 +103,14 @@
           
           <div class="form-group p-2">
             <label for="calleCliente"> Calle del cliente: </label>
-            <input class="form-control" id="calleCliente" type="text" formControlName="calleCliente">
+            <input class="form-control" id="calleCliente" type="text" formControlName="calleCliente" >
           </div>
         
           <div class="form-group p-2">
             <label for="numeroCliente"> Numero de cliente: </label>
             <input class="form-control" id="numeroCliente" type="text" formControlName="numeroCliente">
           </div>
-          
+          onChangeDireccion
           <div class="form-group p-2">
             <label for="detalleUbicacionCliente"> Detalle Ubicacion del Cliente: </label>
             <textarea class="form-control" id="detalleUbicacionCliente" type="textarea" formControlName="detalleUbicacionCliente" rows="3" cols="20"></textarea>
@@ -94,6 +119,9 @@
           <div class="container-mapa form-group p-2">
             <app-map [ciudad]="ciudadCliente" (direccion)="onMapClick($event)"></app-map>
           </div>
+        </div>
+        <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
+          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
         </div>
       </fieldset>
       
@@ -111,80 +139,55 @@
             <span class="p-2"> Entrega inmediata </span>
           </div>
 
-          <div class="form-group p-2">
+          <div *ngIf=" entregaInmediata === true ">
+            <div class="form-group p-2">
             <label for="fechaPedido"> Fecha de pedido: </label>
-            <input class="form-control" id="fechaPedido" type="text" placeholder="aaaa-MM-dd hh:mm:ss" formControlName="fechaPedido">
+            <input class="form-control" id="fechaPedido" type="text"   placeholder="aaaa-MM-dd hh:mm:ss" formControlName="fechaPedido">
           </div>
+        </div>
+          <div *ngIf=" entregaInmediata === false ">
+            <div class="form-group p-2">
+              <label for="fechaPedido"> Fecha de pedido: </label>
+              <input class="form-control" id="fechaPedido" type="datetime-local"   placeholder="aaaa-MM-dd hh:mm:ss" formControlName="fechaPedido">
+            </div>
+          </div>
+        </div>
+        <div class="p-2 w-100" *ngIf="paginaFormulario === 4" >
+          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
         </div>
       </fieldset>
       
-      <fieldset *ngIf="paginaFormulario===5">      
+      <fieldset *ngIf="paginaFormulario === 5">      
         <div class="d-flex flex-column">
           
           <div class="p-2">
             <h2 class="text-center">Pago</h2>
           </div>
 
-          <div class="form-group p-2">
-            <label for="montoPagar">Monto a Pagar</label>
-            <input class="form-control" type="text" name="montoPagar" placeholder="5 peso" [disabled]="true">
-          </div>
+          
 
           <div class="form-group p-2">
             <label for="formaDePago"> Seleccione una forma de pago: </label>
-            <select class="form-control" formControlName="formaDePago" name="formaDePago" id="formaDePago">
-              <option *ngFor="let opt of modosPagoDisponible" value="{{opt.modo}}">{{opt.modo}}</option>
+            <select (change)="enviarHijo()" class="form-control" formControlName="formaDePago" name="formaDePago" id="formaDePago">
+              <option  *ngFor="let opt of modosPagoDisponible" value="{{opt.modo}}">{{opt.modo}}</option>
             </select>
           </div>
 
-          <div *ngIf="pagaConTarjeta()">
-            <div class="form-group p-2">
-              <label for="nombreTarjeta">Nombre en la Tarjeta</label>
-              <input class="form-control" type="text" name="nombreTarjeta" placeholder="Juan Perez">
-            </div>
-
-            <div class="form-group p-2">
-              <label for="numeroTarjeta">Numero de Tarjeta</label>
-              <input class="form-control" type="text" name="numeroTarjeta" placeholder="123456789">
-            </div>
-
-            <div class="form-group p-2 d-flex flex-row">
-              <div class="form-group p-1">
-                <label for="mesVencimiento">Fecha de Vencimiento</label>
-                <input class="form-control" type="text" name="mesVencimiento" placeholder="05">
-              </div>
-
-              <div class="form-group p-1">
-                <label for="anioVencimiento">Fecha de Vencimiento</label>
-                <input class="form-control" type="text" name="anioVencimiento" placeholder="25">
-              </div>
-
-              <div class="form-group p-1 ml-auto">
-                <label for="codigoTarjeta">Código de Seguridad</label>
-                <input class="form-control" type="text" name="codigoTarjeta" placeholder="123">
-              </div>
-            </div>
-
-            <div class="form-group p-2"> 
-              <label for="codigoPostal">Código Postal</label>
-              <input class="form-control" type="text" name="codigoPostal" placeholder="5000">
-            </div>
+          <div *ngIf="datosEnviarTipoPagos === 'Pago con tarjeta de debito Visa' || datosEnviarTipoPagos === 'Pago en Efectivo' ">
+            <app-pago [datosEnviadosTipoPago]="datosEnviarTipoPagos"></app-pago>
           </div>
+        </div>
+        <div class="p-2 w-100" *ngIf="paginaFormulario === 5" >
+          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
         </div>
       </fieldset>
 
       <div class="d-flex mt-1">
-        <div class="p-2 w-100" *ngIf="paginaFormulario===5">
+        <div class="p-2 w-100" *ngIf="paginaFormulario === 5">
           <button class="btn btn-primary w-100" type="submit" [disabled]="pedidoForm.invalid">Confirmar Pedido</button>
         </div>
-        <div class="p-2 w-100" *ngIf="paginaFormulario!==5" >
-          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
-        </div>
+        
       </div>
 
-      <div *ngIf="datosEnviar.metodoPago !== ''">
-        <h3 class="text-center text-primary font-weight-bolder">Metodos de pagos</h3>
-        <app-pago [datosEnviados]="datosEnviar"></app-pago>
-      </div>
     </form>
   </div>

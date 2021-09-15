@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Pago } from 'src/app/models/pago';
+import { FormBuilder, FormGroup, FormControl,Validators } from '@angular/forms';
+import { PagoEfectivo, PagoTarjeta } from 'src/app/models/pago';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pedido } from 'src/app/models/pedido';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import { Resumen } from 'src/app/models/resumen';
   styleUrls: ['./pago.component.css']
 })
 export class PagoComponent implements OnInit {
+  @Input() datosEnviadosTipoPago: string;
   @Input() datosEnviados: Pedido = {
     descripcionProducto: "",
     ciudadComercio: "",
@@ -25,6 +26,7 @@ export class PagoComponent implements OnInit {
     fechaPedido: "",
     metodoPago: "",
   };
+   regex = /^4(\d\s?){14,15}$/
   datosResumen: Resumen | undefined;
   pagoTarjetaForm: FormGroup;
   pagoEfectivoForm: FormGroup;
@@ -34,31 +36,46 @@ export class PagoComponent implements OnInit {
     ,public dialog: MatDialog
     ) {
     this.pagoTarjetaForm = this.formBuilder.group({
-      monto: ['' ],
-      numeroDeTarjeta: [ '' ],
+      montoTarjeta: ['5000'],
+      numeroDeTarjeta: [ '' 
+      , [Validators.required, Validators.pattern(this.regex)]],
       nombreTitular: [ ''],
       apellidoTitular: [ '' ],
       fechaNacimiento: [ '' ],
       codigoSeguridad: [ '' ]
       
     });
+    this.pagoTarjetaForm.controls['montoTarjeta'].disable();
     this.pagoEfectivoForm = this.formBuilder.group({
-      monto: ['' ],
+      montoEfectivo: ['', Validators.required ],
     });
    }
+  
   
   ngOnInit(): void {
     var pedido = this.route.snapshot.paramMap.get('value')
     console.log(pedido)
-    console.log(this.datosEnviados)
+    console.log(this.datosEnviadosTipoPago)
   }
-  onSubmit(value: Pago) {
-    if(this.datosEnviados?.metodoPago == "Efectivo"){
-      console.log("Efectivo",this.pagoEfectivoForm.value);
-      this.router.navigate(['/']);
-    }else{
-      console.log("Tarjeta",this.pagoEfectivoForm.value);
-    }
+  get numeroDeTarjeta(){
+    return this.pagoTarjetaForm.get("numeroDeTarjeta") as FormControl
+  }
+  get montoEfectivo(){
+     return this.pagoEfectivoForm.get("montoEfectivo")  as FormControl
+    
+  }
+  onSubmitEfectivo(value: PagoEfectivo){
+    console.log("Efectivo",this.pagoEfectivoForm.value);
+      //this.router.navigate(['/']);
+    
+  }
+
+  onSubmitTarjeta(value: PagoTarjeta) {
+    console.log("Tarjeta",this.pagoTarjetaForm.value);
+      
+   
+      
+    
     this.datosResumen = {
       producto: this.datosEnviados?.descripcionProducto,
       detalleUbicacionComercio: this.datosEnviados?.detalleComercio,
@@ -71,7 +88,7 @@ export class PagoComponent implements OnInit {
       detalleUbicacionCliente: this.datosEnviados.detalleCliente,
       formaDePago: this.datosEnviados.metodoPago,
       fechaPedido: this.datosEnviados.fechaPedido,
-      monto: value.monto,
+      monto: value.montoTarjeta,
       numeroDeTarjeta: value.numeroDeTarjeta,
       nombreTitular: value.nombreTitular,
       apellidoTitular: value.apellidoTitular,
