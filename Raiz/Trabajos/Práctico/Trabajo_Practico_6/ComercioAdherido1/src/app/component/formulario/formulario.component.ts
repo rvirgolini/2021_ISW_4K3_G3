@@ -61,11 +61,11 @@ export class FormularioComponent implements OnInit {
       ciudadComercio: ['', [Validators.required]],
       calleComercio: [ '', [Validators.required]],
       numeroComercio: [ '', [Validators.required]],
-      detalleComercio: ['', [Validators.required]],
+      detalleComercio: [''],
       ciudadCliente: ['', [Validators.required]],
       calleCliente: [ '', [Validators.required]],
       numeroCliente: [ '', [Validators.required]],
-      detalleCliente: ['', [Validators.required]],
+      detalleCliente: [''],
       formaDePago: ['', [Validators.required]],
       fechaPedido: ['', [Validators.required]]
     });
@@ -212,6 +212,25 @@ export class FormularioComponent implements OnInit {
     let metodoPago:string = this.pedidoForm.value.formaDePago;
 
     return metodoPago.includes("tarjeta");
+  }
+
+  direccionClienteValida(): boolean
+  {
+    return this.pedidoForm.controls['calleCliente'].valid && this.pedidoForm.controls['numeroCliente'].valid
+  }
+
+  direccionComercioValida(): boolean 
+  {
+    return this.pedidoForm.controls['calleComercio'].valid && this.pedidoForm.controls['numeroComercio'].valid
+  }
+
+  fechaPedidoValida() : boolean
+  {
+    if(this.pedidoForm.controls['fechaPedido'].invalid) return false;
+
+    let fechaPedidoValue = this.pedidoForm.controls['fechaPedido'].value;
+
+    return new Date < fechaPedidoValue
   }
 
   private getCiudad(nombreResultado: string) : string

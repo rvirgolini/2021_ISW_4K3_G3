@@ -66,7 +66,7 @@
           
           <div class="form-group p-2">
             <label for="detalleComercio"> Detalle Ubicacion de Comercio: </label>
-            <textarea class="form-control" id="detalleComercio" type="textarea" formControlName="detalleComercio" rows="3" cols="20" (change)="onChangeDireccion($event.target)"></textarea>
+            <textarea class="form-control" id="detalleComercio" type="textarea" formControlName="detalleComercio" rows="3" cols="20"></textarea>
             
           </div>
           
@@ -74,12 +74,12 @@
             <app-map [ciudad]="ciudadComercio" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
-        <div *ngIf="direccionOk === ''" >
+        <div *ngIf="!direccionComercioValida()" >
           <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
             <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
           </div>
         </div>
-        <div *ngIf="direccionOk !== ''">
+        <div *ngIf="direccionComercioValida()">
           <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
             <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
           </div>
@@ -120,8 +120,15 @@
             <app-map [ciudad]="ciudadCliente" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
-        <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
-          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+        <div *ngIf="!this.direccionClienteValida()" >
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
+          </div>
+        </div>
+        <div *ngIf="this.direccionClienteValida()">
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+          </div>
         </div>
       </fieldset>
       
