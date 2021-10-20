@@ -9,6 +9,7 @@ import { CiudadesService } from 'src/app/services/ciudades.service';
 import { MetodosPagoService } from 'src/app/services/metodos-pago.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { Direccion } from 'src/app/models/direccion';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 
 @Component({
@@ -35,11 +36,13 @@ export class FormularioComponent implements OnInit {
     metodoPago: "",
   }
 
-  paginaFormulario = 4;
+  paginaFormulario = 1;
 
   entregaInmediata = false;
   pruductoOK = "";
   direccionOk = "";
+
+  imagenProducto: File | null = null;
 
   ciudadComercio: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
   ciudadCliente: Ciudad = { nombre: " ", latitud: -31.413972040086794, longitud: -64.18537430820507 };
@@ -50,6 +53,7 @@ export class FormularioComponent implements OnInit {
     , private ciudadesService: CiudadesService
     , private metodosPagoService: MetodosPagoService
     , private pedidosService: PedidosService
+    , private storage: AngularFireStorage
     ) { 
       let docDate = 'Jun 15, 2015, 21:43:11 UTC'; //You'll want to change this to UTC or it can mess up your date.
     this.pedidoForm = this.formBuilder.group({
@@ -57,11 +61,11 @@ export class FormularioComponent implements OnInit {
       ciudadComercio: ['', [Validators.required]],
       calleComercio: [ '', [Validators.required]],
       numeroComercio: [ '', [Validators.required]],
-      detalleComercio: ['', [Validators.required]],
+      detalleComercio: [''],
       ciudadCliente: ['', [Validators.required]],
       calleCliente: [ '', [Validators.required]],
       numeroCliente: [ '', [Validators.required]],
-      detalleCliente: ['', [Validators.required]],
+      detalleCliente: [''],
       formaDePago: ['', [Validators.required]],
       fechaPedido: ['', [Validators.required]]
     });
@@ -95,8 +99,7 @@ export class FormularioComponent implements OnInit {
  }
   onSubmit(value: Pedido): void {
     
-    if(!this.pedidoForm.valid) return;
- 
+    
     let datosEnviarDB:Pedido = {
       descripcionProducto: this.pedidoForm.value.producto,
       ciudadComercio: this.pedidoForm.value.ciudadComercio,
@@ -106,12 +109,19 @@ export class FormularioComponent implements OnInit {
       ciudadCliente: this.pedidoForm.value.ciudadCliente,
       calleCliente: this.pedidoForm.value.calleCliente,
       numeroCliente: this.pedidoForm.value.numeroCliente,
-      detalleCliente: this.pedidoForm.value.detalleComercio,
+      detalleCliente: this.pedidoForm.value.detalleCliente,
       fechaPedido: this.pedidoForm.value.fechaPedido,
       metodoPago: this.pedidoForm.value.formaDePago,
     }
+    this.router.navigate(['/']);
     
+
     this.pedidosService.postPedido(datosEnviarDB).subscribe(resp => console.log(resp));
+
+    if(this.imagenProducto != null)
+    {
+      this.storage.upload(`${this.imagenProducto?.name}`, this.imagenProducto);    
+    }
   }
   onChangeDireccion($target: any){
       this.direccionOk = $target.value;
@@ -151,6 +161,16 @@ export class FormularioComponent implements OnInit {
     fechaControl.enable();
   }
 
+  onFileSelected(eventTarget : any)
+  {
+    if(eventTarget == null) return;
+    if(eventTarget.files.item(0).size > 5*1024*1024){
+      alert("La imagen no debe superar los 5mb");
+      return;
+    }
+    this.imagenProducto = eventTarget.files.item(0);
+  }
+
   onMapClick($event: Direccion): void {
     let ciudad = this.getCiudad($event.ciudad);
     let calle = $event.calle;
@@ -168,6 +188,7 @@ export class FormularioComponent implements OnInit {
     controles.calleCliente.setValue(calle);
     controles.numeroCliente.setValue(numero);
   }
+
 
   siguientePagina(): void {
     this.paginaFormulario++;
@@ -191,6 +212,25 @@ export class FormularioComponent implements OnInit {
     let metodoPago:string = this.pedidoForm.value.formaDePago;
 
     return metodoPago.includes("tarjeta");
+  }
+
+  direccionClienteValida(): boolean
+  {
+    return this.pedidoForm.controls['calleCliente'].valid && this.pedidoForm.controls['numeroCliente'].valid
+  }
+
+  direccionComercioValida(): boolean 
+  {
+    return this.pedidoForm.controls['calleComercio'].valid && this.pedidoForm.controls['numeroComercio'].valid
+  }
+
+  fechaPedidoValida() : boolean
+  {
+    if(this.pedidoForm.controls['fechaPedido'].invalid) return false;
+
+    let fechaPedidoValue = this.pedidoForm.controls['fechaPedido'].value;
+
+    return new Date < fechaPedidoValue
   }
 
   private getCiudad(nombreResultado: string) : string

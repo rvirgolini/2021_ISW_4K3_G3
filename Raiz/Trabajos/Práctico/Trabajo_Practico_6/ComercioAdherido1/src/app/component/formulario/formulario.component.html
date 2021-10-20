@@ -24,7 +24,7 @@
          
                   </div>
             <label for="foto">Adjunte una foto de lo que busca (opcional)</label>
-            <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId">
+            <input type="file" class="form-control-file" name="foto" id="foto" accept=".jpg" aria-describedby="fileHelpId" (change)="onFileSelected($event.target)">
             <small id="fileHelpId" class="form-text text-muted">(Formato JPG, 5MB max)</small>
           </div>
         </div>
@@ -66,7 +66,7 @@
           
           <div class="form-group p-2">
             <label for="detalleComercio"> Detalle Ubicacion de Comercio: </label>
-            <textarea class="form-control" id="detalleComercio" type="textarea" formControlName="detalleComercio" rows="3" cols="20" (change)="onChangeDireccion($event.target)"></textarea>
+            <textarea class="form-control" id="detalleComercio" type="textarea" formControlName="detalleComercio" rows="3" cols="20"></textarea>
             
           </div>
           
@@ -74,12 +74,12 @@
             <app-map [ciudad]="ciudadComercio" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
-        <div *ngIf="direccionOk === ''" >
+        <div *ngIf="!direccionComercioValida()" >
           <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
             <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
           </div>
         </div>
-        <div *ngIf="direccionOk !== ''">
+        <div *ngIf="direccionComercioValida()">
           <div class="p-2 w-100" *ngIf="paginaFormulario === 2" >
             <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
           </div>
@@ -110,18 +110,25 @@
             <label for="numeroCliente"> Numero de cliente: </label>
             <input class="form-control" id="numeroCliente" type="text" formControlName="numeroCliente">
           </div>
-          onChangeDireccion
+          
           <div class="form-group p-2">
-            <label for="detalleUbicacionCliente"> Detalle Ubicacion del Cliente: </label>
-            <textarea class="form-control" id="detalleUbicacionCliente" type="textarea" formControlName="detalleUbicacionCliente" rows="3" cols="20"></textarea>
+            <label for="detalleCliente"> Detalle Ubicacion del Cliente: </label>
+            <textarea class="form-control" id="detalleCliente" type="textarea" formControlName="detalleCliente" rows="3" cols="20"></textarea>
           </div>
 
           <div class="container-mapa form-group p-2">
             <app-map [ciudad]="ciudadCliente" (direccion)="onMapClick($event)"></app-map>
           </div>
         </div>
-        <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
-          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+        <div *ngIf="!this.direccionClienteValida()" >
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()" disabled>Siguiente</button>
+          </div>
+        </div>
+        <div *ngIf="this.direccionClienteValida()">
+          <div class="p-2 w-100" *ngIf="paginaFormulario === 3" >
+            <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+          </div>
         </div>
       </fieldset>
       
@@ -178,13 +185,13 @@
           </div>
         </div>
         <div class="p-2 w-100" *ngIf="paginaFormulario === 5" >
-          <button class="btn btn-primary w-100" (click)="siguientePagina()">Siguiente</button>
+         
         </div>
       </fieldset>
 
       <div class="d-flex mt-1">
         <div class="p-2 w-100" *ngIf="paginaFormulario === 5">
-          <button class="btn btn-primary w-100" type="submit" [disabled]="pedidoForm.invalid">Confirmar Pedido</button>
+          <button class="btn btn-primary w-100" type="submit" >Confirmar Pedido</button>
         </div>
         
       </div>
