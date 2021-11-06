@@ -52,15 +52,15 @@ Para la ubicación física se parte del directorio raíz del repositorio (cuyo n
 | Nombre del ítem de configuración  		| Regla de nombrado                          	| Ubicación física              				|
 |-----------------------------------------------|-----------------------------------------------|---------------------------------------------------------------|
 | Material de la cátedra            		| <AAAA>_<Nombre_Material>.pdf          	| Raiz\Material_de_catedra              			|
-| Trabajos prácticos                    	| TP<NN>_<Nombre_Tema>.(pdf|ppt) 	        | Raiz\Trabajos\Práctico\Trabajo_Practico_<NN>  		|
+| Trabajos prácticos                    	| TP<NN>_<Nombre_Tema>.(pdf/ppt) 	        | Raiz\Trabajos\Práctico\Trabajo_Practico_<NN>  		|
 | Enunciado de trabajos practicos       	| <AAAA>_<Nombre_Material>.pdf                  | Raiz\Trabajos\Práctico\                   			|
-| Trabajos Conceptuales	        		| <AAAA>_<Curso>_<GrupoNN>_<Tema>.(pdf|ppt)     | Raiz\Trabajos\Teórico\TC<N>                  			|
+| Trabajos Conceptuales	        		| <AAAA>_<Curso>_<GrupoNN>_<Tema>.(pdf/ppt)     | Raiz\Trabajos\Teórico\TC<N>                  			|
 | Lineamiento para trabajos teóricos    	| <AAAA>_<Nombre_Material>.pdf               	| Raiz\Trabajos\Teórico                   			|
-| Herramientas para presentacion de informacion | <AAAA>_<Nombre_Material>.(doc|docx)         	| Raiz\Parciales                 				|
+| Herramientas para presentacion de informacion | <AAAA>_<Nombre_Material>.(doc/docx)         	| Raiz\Parciales                 				|
 | Protocolo para rendir parciales               | <AAAA>_<Nombre_Material>.pdf		        | Raiz\Parciales       						|
 | Parciales 					| <AAAA>_Parcial<n>_Tema<m>.pdf             	| Raiz\Parciales      						|
 | Material clases prácticas   			| <AAAA>_<Nombre_Material>.<ext>                | Raiz\Practico      						|
-| Presentaciones de clases teóricas             | <AAAA>_2C_<NN>_<Nombre_Material>.(pdf|ppt)    | Raiz\Teorico\Presentaciones_de_clase    			|
+| Presentaciones de clases teóricas             | <AAAA>_2C_<NN>_<Nombre_Material>.(pdf/ppt)    | Raiz\Teorico\Presentaciones_de_clase    			|
 | Material bibliográfico            	 	| <Nombre_Material>.pdf            	    	| Raiz\Teorico\Material_bilbiografico 	    			|
 | Implementaciones	            	 	| TP<NN>_<nombre_proyecto>            	    	| Raiz\Trabajos\Practico\Trabajo_Practico_<NN>\Implementacion	|	    			
 | Cronograma Tentativo            	 	| <AAAA>_<Curso>_<Nombre_Material>_v<N>.xlsx    | Raiz\Material_de_catedra 	    				|
