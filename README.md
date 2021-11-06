@@ -1,12 +1,12 @@
 # ISW_4K3_2021
 ## Repositorio del grupo 3 de ISW
 
-### Alumnos 🎓
+### Integrantes
 - Gomez Toledo, Benjamín - 78928
 - Virgolini, Rodrigo - 62890
 - Rodriguez, Jorge - 77106
 
-### Estructura del repositorio 📐
+### Estructura del repositorio 
 ```
 2021_ISW_4K3_G3
 └───Raiz
@@ -15,12 +15,12 @@
     │
     │       
     ├───Parciales
-    │    <AAAA>_<Nombre_Material>.<ext>
+    │       <AAAA>_<Nombre_Material>.<ext>
     │
     │
     ├───Practico
     │       <AAAA>_<Nombre_Material>.<ext>
-    │    <AAAA>_Parcial<n>_Tema<m>.<ext>
+    │       <AAAA>_Parcial<n>_Tema<m>.<ext>
     │       
     │
     ├───Teorico
@@ -33,20 +33,20 @@
     │
     └───Trabajos
             ├───Práctico
-            │       │    <AAAA>_<Nombre_Material>.<ext>
+            │       │<AAAA>_<Nombre_Material>.<ext>
             │       │
             │       └───Trabajo_Practico_<NN>
-            │        TP<NN>_<Nombre_Tema>_V<n>.<ext>
+            │               TP<NN>_<Nombre_Tema>_V<n>.<ext>
             │
             └───Teórico
-                │    <AAAA>_<Nombre_Material>.<ext>
-                │
-                └───TC<N>
-                <AAAA>_<Curso>_<GrupoNN>_<Tema>.<ext>
+                    │<AAAA>_<Nombre_Material>.<ext>
+                    │
+                    └───TC<N>
+                            <AAAA>_<Curso>_<GrupoNN>_<Tema>.<ext>
 
 ```
 
-### Ítems de configuración 🔧
+### Ítems de configuración 
 Para la ubicación física se parte del directorio raíz del repositorio (cuyo nombre es ISW_4K3_2021)
 
 | Nombre del ítem de configuración  		| Regla de nombrado                          	| Ubicación física              				|
@@ -77,5 +77,5 @@ Donde cada etiqueta entre signos < y > debe ser remplazada por:
 | Nombre_Proyecto	| Nombre de la carpeta que alberga el proyecto de implementación, debe ser representativo y coherente.		|
 
 	
-### Linea base 📝
+### Base Line
 Cada entrega de trabajo práctico conceptual, incorporando una nueva presentación solicitada por la cátedra y pudiendo haber correjido errores en los trabajos presentados. 
